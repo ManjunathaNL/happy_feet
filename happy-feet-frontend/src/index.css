@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --dynamic-accent-bg: #7f1d1d;   /* Default Header, Sidebar, and Brand Accents */
+  --dynamic-accent-text: #ffffff; /* Typography inside the accent surfaces */
+}
+
+body {
+  background-color: #f8fafc; 
+  color: #0f172a;            
+  min-height: 100vh;
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  transition: background-color 0.3s ease;
+}
+
+/* Custom fade animation frame utility optimized for dropdown menus */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.2s ease-out forwards;
+}
