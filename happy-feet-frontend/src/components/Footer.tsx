@@ -5,7 +5,7 @@ import { Facebook, Instagram, Linkedin, Footprints } from 'lucide-react';
 export const Footer: React.FC = () => {
   return (
     <footer className="border-t border-black/10 pt-12 pb-6 mt-auto text-xs font-medium w-full transition-all duration-300 shadow-inner bg-[var(--dynamic-accent-bg)] text-[var(--dynamic-accent-text)]">
-      <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+      <div className="w-full px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-8">
         
         {/* Shopping Links Subsection */}
         <div>

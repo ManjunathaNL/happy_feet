@@ -80,7 +80,7 @@ export const Header: React.FC = () => {
 
   return (
     <nav className="sticky top-0 z-40 bg-[var(--dynamic-accent-bg)] text-[var(--dynamic-accent-text)] border-b border-black/10 shadow-md transition-all duration-300 font-sans">
-      <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between gap-4">
+      <div className="w-full px-4 py-4 flex items-center justify-between gap-4">
         
         {/* Left Side: Brand Logo & Contact Link */}
         <div className="flex items-center gap-6 shrink-0">
@@ -248,9 +248,8 @@ export const Header: React.FC = () => {
         </button>
       </div>
 
-      {/* --- Sub-Navigation Demographics Row --- */}
       <div className="bg-black/10 border-t border-white/5 hidden lg:block">
-        <div className="max-w-7xl mx-auto px-4 flex items-center">
+        <div className=" px-4 flex items-center">
           <div className="flex gap-6 py-2.5">
             {targetedDemographics.map((segment) => (
               <Link
