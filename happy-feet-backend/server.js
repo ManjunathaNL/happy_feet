@@ -12,17 +12,18 @@ const RoleRouteMapping = require("./src/models/RoleRouteMapping");
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // API Routes
 app.use("/api/auth", require("./src/routes/authRoutes"));
 app.use("/api/users", require("./src/routes/userRoutes"));
 app.use("/api/roles", require("./src/routes/roleRoutes"));
 app.use("/api/routes", require("./src/routes/routeRoutes"));
-app.use("/api/brands", require("./src/routes/brandRoutes"));
-app.use("/api/categories", require("./src/routes/categoryRoutes"));
 app.use("/api/products", require("./src/routes/productRoutes"));
 app.use("/api/inventory", require("./src/routes/inventoryRoutes"));
 app.use("/api/role-route-mappings", require("./src/routes/roleRouteMappingRoutes"));
+app.use("/api/masters", require("./src/routes/masterRoutes"));
+
 
 const seedDatabase = async () => {
   try {
@@ -72,8 +73,6 @@ const seedDatabase = async () => {
       { path: "/roles", name: "Role Management" },
       { path: "/routes", name: "Route Governance" },
       { path: "/role-route-mappings", name: "Access Mappings" },
-      { path: "/brands", name: "Brand Management" },
-      { path: "/categories", name: "Category Management" }
     ];
 
     console.log("Synchronizing admin panel paths into database repository...");

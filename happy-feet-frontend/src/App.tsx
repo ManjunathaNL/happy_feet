@@ -27,11 +27,13 @@ const Dashboard = React.lazy(() => import('./pages/Dashboard.tsx').then(module =
 const UserManagement = React.lazy(() => import('./pages/UserManagement.tsx').then(module => ({ default: module.UserManagement })));
 const RoleManagement = React.lazy(() => import('./pages/RoleManagement.tsx').then(module => ({ default: module.RoleManagement })));
 const RouteManagement = React.lazy(() => import('./pages/RouteManagement.tsx').then(module => ({ default: module.RouteManagement })));
-const BrandManagement = React.lazy(() => import('./pages/BrandManagement.tsx').then(module => ({ default: module.BrandManagement })));
-const CategoryManagement = React.lazy(() => import('./pages/CategoryManagement.tsx').then(module => ({ default: module.CategoryManagement })));
-const ProductCatalog = React.lazy(() => import('./pages/ProductCatalog.tsx').then(module => ({ default: module.ProductCatalog })));
+// const BrandManagement = React.lazy(() => import('./pages/BrandManagement.tsx').then(module => ({ default: module.BrandManagement })));
+// const CategoryManagement = React.lazy(() => import('./pages/CategoryManagement.tsx').then(module => ({ default: module.CategoryManagement })));
+const ProductManagement = React.lazy(() => import('./pages/ProductManagement.tsx').then(module => ({ default: module.ProductManagement })));
 const InventoryTracker = React.lazy(() => import('./pages/InventoryTracker.tsx').then(module => ({ default: module.InventoryTracker })));
 const AccessMappings = React.lazy(() => import('./pages/AccessMappings.tsx').then(module => ({ default: module.AccessMappings })));
+const MasterManagement = React.lazy(() => import('./pages/MasterManagement.tsx').then(module => ({ default: module.MasterManagement })));
+
 
 // Map lazy components directly to the dynamic absolute 'path' string keys coming from the DB
 const lazyComponentRegistry: Record<string, React.LazyExoticComponent<React.ComponentType<any>>> = {
@@ -39,11 +41,12 @@ const lazyComponentRegistry: Record<string, React.LazyExoticComponent<React.Comp
   '/users': UserManagement,
   '/roles': RoleManagement,
   '/routes': RouteManagement,
-  '/brands': BrandManagement,
-  '/categories': CategoryManagement,
-  '/products': ProductCatalog,
+  // '/brands': BrandManagement,
+  // '/categories': CategoryManagement,
+  '/products': ProductManagement,
   '/inventory': InventoryTracker,
   '/role-route-mappings': AccessMappings,
+  "/masters":MasterManagement,
 };
 
 // 🌀 Simple clean loading state for chunk resolution transitions

@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback,useEffect } from 'react';
 
 export interface TableOptions {
   itemsPerPage?: number;
@@ -67,6 +67,16 @@ export const useTable = <T extends Record<string, any>>(
     Math.ceil(sortedData.length / itemsPerPage) || 1, 
     [sortedData.length, itemsPerPage]
   );
+
+  useEffect(() => {
+  if (page > totalPages) {
+    setPage(totalPages);
+  }
+}, [page, totalPages]);
+
+useEffect(() => {
+  setPage(1);
+}, [data]);
 
   const paginatedData = useMemo(() => {
     const start = (page - 1) * itemsPerPage;
@@ -138,7 +148,8 @@ export const useTable = <T extends Record<string, any>>(
     sortConfig,
 
     // Handlers
-    setPage: handlePageChange,
+    setPage,
+      changePage: handlePageChange,
     setSearch: handleSearch,
     setItemsPerPage: handleItemsPerPageChange,
     toggleSort,

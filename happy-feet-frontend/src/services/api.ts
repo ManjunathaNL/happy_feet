@@ -1,13 +1,13 @@
-
-
-
-
 import axios from "axios";
 import toast from "react-hot-toast";
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+
+// 2. Export the root URL for images (removes the '/api' at the end)
+export const IMAGE_BASE_URL = API_URL.replace(/\/api$/, "");
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "/api",
-  
+  baseURL: API_URL,
 });
 
 // Interceptor to inject JWT token
@@ -71,22 +71,36 @@ export const mappingAPI = {
   delete: (id: string) => api.delete(`/role-route-mappings/${id}`),
 };
 
-// --- CATALOG & INVENTORY ---
+const createMasterAPI = (endpoint: string) => ({
+  getAll: () => api.get(`/masters/${endpoint}`),
+  getById: (id: string) => api.get(`/masters/${endpoint}/${id}`),
+  create: (data: any) => api.post(`/masters/${endpoint}`, data),
+  update: (id: string, data: any) => api.put(`/masters/${endpoint}/${id}`, data),
+  delete: (id: string) => api.delete(`/masters/${endpoint}/${id}`),
+});
+
+export const masterAPI = {
+  store: createMasterAPI("stores"),
+  brand: createMasterAPI("brands"),
+  category: createMasterAPI("categories"),
+  subCategory: createMasterAPI("subcategories"),
+  attributeType: createMasterAPI("attributetypes"),
+  globalAttribute: createMasterAPI("globalattributes"),
+  banner: createMasterAPI("banners"),
+};
+
+// --- ISOLATED CORE PRODUCTS & VARIANT MATRICES ENGINE ENGINE ---
 export const catalogAPI = {
-  getBrands: () => api.get("/brands"),
-  createBrand: (data: any) => api.post("/brands", data),
-
-  getCategories: () => api.get("/categories"),
-  createCategory: (data: any) => api.post("/categories", data),
-
   getProducts: () => api.get("/products"),
+  getProductById: (id: string) => api.get(`/products/${id}`),
   createProduct: (data: any) => api.post("/products", data),
+  updateProduct: (id: string, data: any) => api.put(`/products/${id}`, data),
+  deleteProduct: (id: string) => api.delete(`/products/${id}`),
 
-  getVariants: (productId: string) => api.get(`/products/${productId}/variants`),
+  // Separate Dynamic Variant Queries Core Engine
+  getVariantsByProductId: (productId: string) => api.get(`/products/variants/query?productId=${productId}`),
   createVariant: (data: any) => api.post("/products/variants", data),
-
-  getInventory: () => api.get("/inventory"),
-  updateStock: (data: any) => api.post("/inventory/adjust", data),
+  deleteVariant: (id: string) => api.delete(`/products/variants/${id}`),
 };
 
 export default api;

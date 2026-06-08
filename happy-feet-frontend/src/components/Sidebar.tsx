@@ -37,10 +37,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ isSidebarOpen, setIsSidebarOpe
         return FolderTree;
       case 'route settings': 
         return Settings;
-      case 'brand management': 
-        return Package;
-      case 'category management': 
-        return Layers;
       case 'product catalog': 
         return Boxes;
       case 'inventory tracker': 
