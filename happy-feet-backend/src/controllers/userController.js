@@ -2,10 +2,10 @@ const User = require('../models/User');
 const Role = require('../models/Role');
 const crypto = require('crypto');
 const { sendOnboardingEmail } = require('../services/emailService');
-
 exports.getUsers = async (req, res) => {
   try {
-    const users = await User.find({}).populate('roleId').select('-password');
+    // ✅ POPULATE: Include storeId name references
+    const users = await User.find({}).populate('roleId').populate('storeId', 'name code').select('-password');
     res.json(users);
   } catch (error) { 
     res.status(500).json({ message: error.message }); 
@@ -13,15 +13,13 @@ exports.getUsers = async (req, res) => {
 };
 
 exports.createUser = async (req, res) => {
-  const { firstName, lastName, email, mobile, roleId, status, profilePhoto } = req.body;
+  // ✅ UNPACK: storeId included from req.body
+  const { firstName, lastName, email, mobile, roleId, storeId, status, profilePhoto } = req.body;
   try {
     const accountExists = await User.findOne({ email: email.toLowerCase().trim() });
-if (accountExists) {
-  return res.status(400).json({ 
-    success: false, 
-    message: 'Email address already exists' 
-  });
-}
+    if (accountExists) {
+      return res.status(400).json({ success: false, message: 'Email address already exists' });
+    }
 
     const assignedRole = await Role.findById(roleId);
     if (!assignedRole) {
@@ -36,8 +34,9 @@ if (accountExists) {
       email: email.toLowerCase().trim(),
       mobile,
       password: temporaryPlainPassword,
-      roleName: assignedRole.name,
       roleId: assignedRole._id,
+      // ✅ ASSIGN: Save store link if provided
+      storeId: assignedRole.name !== 'Customer' ? storeId || null : null, 
       status: status || 'active',
       profilePhoto: profilePhoto || ''
     });
@@ -64,13 +63,22 @@ exports.updateUser = async (req, res) => {
   try {
     if (req.body.password) delete req.body.password;
     
-    const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true }).populate('roleId');
+    // Clear out store data if the role is being changed to 'Customer'
+    if (req.body.roleId) {
+      const targetRole = await Role.findById(req.body.roleId);
+      if (targetRole && targetRole.name === 'Customer') {
+        req.body.storeId = null;
+      }
+    }
+
+    const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true })
+      .populate('roleId')
+      .populate('storeId', 'name code');
     res.json(user);
   } catch (error) { 
     res.status(400).json({ message: error.message }); 
   }
 };
-
 exports.deleteUser = async (req, res) => {
   try {
     const userToDelete = await User.findById(req.params.id);

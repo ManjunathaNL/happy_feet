@@ -12,7 +12,7 @@ import {
   X,
 } from "lucide-react";
 import toast from "react-hot-toast";
-import { RootState } from "../redux/store";
+import { RootState } from "../redux";
 import { closeAuthModal, setAuthSuccess } from "../redux/authSlice";
 import api from "../services/api";
 import { useNavigate } from "react-router-dom";

@@ -8,10 +8,13 @@ const Role = require("./src/models/Role");
 const User = require("./src/models/User");
 const Route = require("./src/models/Route");
 const RoleRouteMapping = require("./src/models/RoleRouteMapping");
+const Inventory = require('./src/models/InventoryLog');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+// app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+// app.use("/", express.static(__dirname));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // API Routes
@@ -23,6 +26,7 @@ app.use("/api/products", require("./src/routes/productRoutes"));
 app.use("/api/inventory", require("./src/routes/inventoryRoutes"));
 app.use("/api/role-route-mappings", require("./src/routes/roleRouteMappingRoutes"));
 app.use("/api/masters", require("./src/routes/masterRoutes"));
+app.use("/api/checkout", require('./src/routes/checkout'));
 
 
 const seedDatabase = async () => {
@@ -61,6 +65,7 @@ const seedDatabase = async () => {
         mobile: "9876543210",
         password: "Admin@123",
         roleId: superAdminRole._id,
+        storeId: null,
         status: "active",
       });
       console.log("✅ Master user created (superadmin@happyfeet.com).");

@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
 // 2. Export the root URL for images (removes the '/api' at the end)
-export const IMAGE_BASE_URL = API_URL.replace(/\/api$/, "");
+export const IMAGE_BASE_URL = API_URL.replace(/\/api$/, "") + "/";
 
 const api = axios.create({
   baseURL: API_URL,
@@ -101,6 +101,14 @@ export const catalogAPI = {
   getVariantsByProductId: (productId: string) => api.get(`/products/variants/query?productId=${productId}`),
   createVariant: (data: any) => api.post("/products/variants", data),
   deleteVariant: (id: string) => api.delete(`/products/variants/${id}`),
+};
+
+
+// --- INVENTORY MANAGEMENT ENGINE ---
+export const inventoryAPI = {
+  getAll: () => api.get("/inventory"),
+  updateStock: (data: { variantId: string, nextStockCount: number, adjustmentsReason: string }) => 
+    api.put("/inventory/update-stock", data),
 };
 
 export default api;

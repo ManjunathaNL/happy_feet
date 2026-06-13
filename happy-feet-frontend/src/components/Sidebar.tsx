@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { RootState } from '../redux/store.ts';
+import { RootState } from '../redux/index.ts';
 import { RouteAccess } from '../redux/authSlice.ts';
 import { 
   LayoutDashboard, 

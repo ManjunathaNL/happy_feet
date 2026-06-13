@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { RootState } from '../redux/store.ts';
+import { RootState } from '../redux/index.ts';
 import { logout } from '../redux/authSlice.ts';
 import { Bell, LogOut, User, Menu, ChevronDown, Settings } from 'lucide-react';
 
